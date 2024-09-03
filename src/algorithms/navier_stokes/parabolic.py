@@ -157,7 +157,8 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
         inner(u - uold,v) 
         + tau*( 1.0/(2.0*Re)*inner(grad(u) + grad(uold), grad(v)) - inner(p, div(v)) + inner(div(u), q) )
         - tau*inner(det_forcing,v)
-        + tau/4.0*inner(dot(grad(u) + grad(uold), u + uold), v)
+        + tau/8.0*inner(dot(grad(u) + grad(uold), u + uold), v)
+        - tau/8.0*inner(dot(grad(v), u + uold), u + uold)
         - dW/4.0*inner(dot(grad(u) + grad(uold), noise_coefficient), v)
         + dW/4.0*inner(dot(grad(v), noise_coefficient), u + uold)
         )*dx

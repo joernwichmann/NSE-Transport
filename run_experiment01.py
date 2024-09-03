@@ -26,7 +26,7 @@ from src.postprocess.statistics import StatisticsObject
 from src.postprocess.processmanager import ProcessManager
 
 #load global and lokal configs
-from configs import TaylorHood_noDiv_init_poly_noise_implicitEuler as cf
+from configs import exp01 as cf
 from configs import global_configs as gcf
 
 def generate_one(time_disc: TimeDiscretisation,
@@ -44,7 +44,7 @@ def generate_one(time_disc: TimeDiscretisation,
     ref_to_time_to_pressure = dict()
     for level in ref_to_noise_increments: 
         ### Solve algebraic system
-        ref_to_time_to_velocity[level], ref_to_time_to_pressure[level] = algorithm(
+        ref_to_time_to_velocity[level], ref_to_time_to_pressure[level], _ = algorithm(
             space_disc=space_disc,
             time_grid=time_disc.ref_to_time_grid[level],
             noise_steps= ref_to_noise_increments[level],
@@ -53,7 +53,6 @@ def generate_one(time_disc: TimeDiscretisation,
             Reynolds_number=1
             )
     return ref_to_noise_increments, ref_to_time_to_velocity, ref_to_time_to_pressure
-
 
 def generate() -> None:
     """Runs the experiment multiple times."""

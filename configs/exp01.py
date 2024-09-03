@@ -1,13 +1,13 @@
 """Contains local parameter configuration."""
 ### Experimentname
-NAME_EXPERIMENT: str = "TH_poly_init_noDiv_noise_implicitEuler"
+NAME_EXPERIMENT: str = "TH_smooth"
 
 ### Algorithm
-ALGORITHM_NAME: str =  "Implicit Euler mixed FEM" #see src.algorithms.select.py for available choices
+ALGORITHM_NAME: str =  "CN mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
 
 ### Data
 INITIAL_CONDITION_NAME: str = "polynomial"    #see 'src.predefined_data' for available choices
-NOISE_COEFFICIENT_NAME: str = "polynomial - no div"  #see 'src.predefined_data' for available choices
+NOISE_COEFFICIENT_NAME: str = "polynomial"  #see 'src.predefined_data' for available choices
 
 ### Discretisation
 VELOCITY_ELEMENT: str = "CG"    #see firedrake doc for available spaces

@@ -22,7 +22,7 @@ MESH_NAME: str = "unit square"  #see 'src.discretisation.mesh' for available cho
 NAME_BOUNDARY_CONDITION: str = "zero"  #see 'src.discretisation.mesh' for available choices
 
 # Stochastic
-MC_SAMPLES: int = 1000
+MC_SAMPLES: int = 5
 NOISE_INCREMENTS: str = "classical" # see 'src.noise' for available choices
 
 ################               ANALYSE configs               ############################
