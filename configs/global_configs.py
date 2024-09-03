@@ -7,7 +7,7 @@ DUMP_LOCATION: str = "sample_dump"
 
 ################               GENERATE configs               ############################
 ### Model
-MODEL_NAME: str = "Stokes"  #see src.algorithms.select.py for available choices
+MODEL_NAME: str = "Navier--Stokes" #see src.algorithms.select.py for available choices
 P_VALUE: float = 2
 
 ### Discretisation
