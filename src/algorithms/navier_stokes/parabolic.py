@@ -102,7 +102,7 @@ def implicitEuler_mixedFEM(space_disc: SpaceDiscretisation,
         
         #try solve nonlinear problem by using firedrake blackbox. If default solve doesn't converge, restart solve with enbabled montoring to see why it fails. 
         try:   
-            solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null)
+            solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null, solver_parameters=direct_solve)
         except ConvergenceError as e:
             logging.exception(e)
             solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null, solver_parameters=direct_solve_details)
@@ -155,7 +155,7 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
     # build variational form
     VariationalForm = ( 
         inner(u - uold,v) 
-        + tau*( 1.0/(2.0*Re)*inner(grad(u) + grad(uold), grad(v)) - inner(p, div(v)) + inner(div(u), q) )
+        + tau*( 1.0/(2.0*Re)*inner(grad(u) + grad(uold), grad(v)) - inner(p, div(v)) + 1/2.0*inner(div(u) + div(uold), q) )
         - tau*inner(det_forcing,v)
         + tau/8.0*inner(dot(grad(u) + grad(uold), u + uold), v)
         - tau/8.0*inner(dot(grad(v), u + uold), u + uold)
@@ -171,11 +171,13 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
     time_to_velocity = dict()
     time_to_pressure = dict()
     time_to_velocity_midpoints = dict()
+    time_to_pressure_midpoints = dict()
 
     # store initialisation of time-stepping
     time_to_velocity[time] = deepcopy(uold)
     time_to_velocity_midpoints[time] = deepcopy(det_forcing)
     time_to_pressure[time] = deepcopy(pold)
+    time_to_pressure_midpoints[time] = deepcopy(pold)
 
     #check if deterministic and random increments are iterables of the same length
     if not len(time_increments) == len(noise_steps):
@@ -187,6 +189,7 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
     for index in tqdm(range(len(time_increments))):
         # update random and deterministc time step, and nodal time
         dW.assign(noise_steps[index])
+        #dW.assign(time_increments[index])
         tau.assign(time_increments[index])
         time += time_increments[index]
         
@@ -199,8 +202,9 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
                 raise k
         
         #try solve nonlinear problem by using firedrake blackbox. If default solve doesn't converge, restart solve with enbabled montoring to see why it fails. 
+        
         try:   
-            solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null)
+            solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null, solver_parameters=direct_solve)
         except ConvergenceError as e:
             logging.exception(e)
             solve(VariationalForm == 0, up, bcs=space_disc.bcs_mixed, nullspace=space_disc.null, solver_parameters=direct_solve_details)
@@ -215,8 +219,12 @@ def CrankNicolson_mixedFEM_strato_transportNoise_withAntisym(space_disc: SpaceDi
         velocity_mid.dat.data[:] = (velocity.dat.data + uold.dat.data)/2.0
         time_to_velocity_midpoints[time] = deepcopy(velocity_mid)
         time_to_pressure[time] = deepcopy(pressure)
+        pressure_mid = Function(space_disc.pressure_space)
+        pressure_mid.dat.data[:] = (pressure.dat.data + pold.dat.data)/2.0
+        time_to_pressure_midpoints[time] = pressure_mid
 
         #update uold to proceed time-steppping
         uold.assign(velocity)
+        pold.assign(pressure)
 
-    return time_to_velocity, time_to_pressure, time_to_velocity_midpoints
+    return time_to_velocity, time_to_pressure, time_to_velocity_midpoints, time_to_pressure_midpoints
