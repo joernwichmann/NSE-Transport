@@ -15,6 +15,7 @@ P_VALUE: float = 2
 INITIAL_TIME: float = 0
 END_TIME: float = 1
 REFINEMENT_LEVELS: list[int] = list(range(2,10))
+INITIAL_INTENSITY: float = 1
 
 # Space
 NUMBER_SPACE_POINTS: int = 12
@@ -24,6 +25,7 @@ NAME_BOUNDARY_CONDITION: str = "zero"  #see 'src.discretisation.mesh' for availa
 # Stochastic
 MC_SAMPLES: int = 5
 NOISE_INCREMENTS: str = "classical" # see 'src.noise' for available choices
+NOISE_INTENSITY: float = 1000
 
 ################               ANALYSE configs               ############################
 #Convergence
