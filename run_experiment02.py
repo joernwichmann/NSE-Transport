@@ -26,7 +26,7 @@ from src.postprocess.statistics import StatisticsObject
 from src.postprocess.processmanager import ProcessManager
 
 #load global and lokal configs
-from configs import exp01 as cf
+from configs import exp02 as cf
 from configs import global_configs as gcf
 
 def generate_one(time_disc: TimeDiscretisation,
