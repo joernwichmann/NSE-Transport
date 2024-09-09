@@ -34,6 +34,12 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return _polynomial_non_bc(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
         case "polynomial - no div":
             return _polynomial_non_div(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
+        case "trigonometric":
+            return _trig(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
+        case "trigonometric- no BC":
+            return _trig_non_bc(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
+        case "trigonometric - no div":
+            return _trig_non_div(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
         
         ### Stokes projected functions
         case "x: hill, y: wave - Stokes projected":
@@ -46,6 +52,12 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return Stokes_projection(_polynomial(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "zero - Stokes projected":
             return Stokes_projection(Function(space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - Stokes projected":
+            return Stokes_projection(_trig(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric- no BC - Stokes projected":
+            return Stokes_projection(_trig_non_bc(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - no div - Stokes projected":
+            return Stokes_projection(_trig_non_div(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         
         ### HL projected functions
         case "x: hill, y: wave - HL projected":
@@ -56,6 +68,12 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return HL_projection(_solenoidal(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "polynomial - HL projected":
             return HL_projection(_polynomial(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - HL projected":
+            return HL_projection(_trig(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric- no BC - HL projected":
+            return HL_projection(_trig_non_bc(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - no div - HL projected":
+            return HL_projection(_trig_non_div(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         
         ### HL projected functions with BC
         case "zero - HL projected with BC":
@@ -76,16 +94,41 @@ def _non_solenoidal(j: int, k: int, mesh: MeshGeometry, velocity_space: Function
     x, y = SpatialCoordinate(mesh)
     expr = as_vector([
         sin(j*pi*x)*sin(k*pi*y),
-        sin(j*pi*x)*sin(k*pi*y)
+        -1*sin(j*pi*x)*sin(k*pi*y)
         ])
     return project(expr, velocity_space)
 
 #see Section 6 in 'Time-splitting Methods to solve the stochastic incrompressible Stokes equation'
 def _solenoidal(j: int, k: int, mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
+    #only solenoidal for j=k
     x, y = SpatialCoordinate(mesh)
     expr = as_vector([
         -1.0*cos(j*pi*x - pi/2.0)*sin(k*pi*y - pi/2.0),
         sin(j*pi*x - pi/2.0)*cos(k*pi*y - pi/2.0)
+        ])
+    return project(expr, velocity_space)
+
+def _trig(j: int, k: int, mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
+    x, y = SpatialCoordinate(mesh)
+    expr = as_vector([
+        sin(j*pi*x)*sin(k*pi*y),
+        -1*sin(k*pi*x)*sin(j*pi*y)
+        ])
+    return project(expr, velocity_space)
+
+def _trig_non_div(j: int, k: int, mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
+    x, y = SpatialCoordinate(mesh)
+    expr = as_vector([
+        sin(j*pi*x)*sin(k*pi*y),
+        -1*sin(2*k*pi*x)*sin(2*j*pi*y)
+        ])
+    return project(expr, velocity_space)
+
+def _trig_non_bc(j: int, k: int, mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
+    x, y = SpatialCoordinate(mesh)
+    expr = as_vector([
+        sin(j*pi*x)*cos(k*pi*y),
+        -1*cos(k*pi*x)*sin(j*pi*y)
         ])
     return project(expr, velocity_space)
 
