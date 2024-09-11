@@ -11,7 +11,7 @@ Energy_function: TypeAlias = Callable[[dict[float,Function]],dict[float,float]]
 #implementation
 def kinetic_energy(time_to_function: dict[float,Function]) -> dict[float,float]:
     """Compute the kinetic energy of a function."""
-    return  {time: l2_space(time_to_function[time]**2/2.0) for time in time_to_function.keys()}
+    return  {time: l2_space(time_to_function[time])**2/2.0 for time in time_to_function.keys()}
 
 def potential_energy(time_to_function: dict[float,Function]) -> dict[float,float]:
     """Compute the potential energy of the function"""
