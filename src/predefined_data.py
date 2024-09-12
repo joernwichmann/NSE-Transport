@@ -50,6 +50,10 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return Stokes_projection(_solenoidal(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "polynomial - Stokes projected":
             return Stokes_projection(_polynomial(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no BC - Stokes projected":
+            return Stokes_projection(_polynomial_non_bc(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no div - Stokes projected":
+            return Stokes_projection(_polynomial_non_div(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "zero - Stokes projected":
             return Stokes_projection(Function(space_disc.velocity_space),space_disc)[0]
         case "trigonometric - Stokes projected":
@@ -68,6 +72,10 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return HL_projection(_solenoidal(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "polynomial - HL projected":
             return HL_projection(_polynomial(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no BC - HL projected":
+            return HL_projection(_polynomial_non_bc(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no div - HL projected":
+            return HL_projection(_polynomial_non_div(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "trigonometric - HL projected":
             return HL_projection(_trig(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "trigonometric- no BC - HL projected":
@@ -78,6 +86,12 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
         ### HL projected functions with BC
         case "zero - HL projected with BC":
             return HL_projection_withBC(Function(space_disc.velocity_space),space_disc)[0]
+        case "polynomial - HL projected with BC":
+            return HL_projection_withBC(_polynomial(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no BC - HL projected with BC":
+            return HL_projection_withBC(_polynomial_non_bc(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "polynomial - no div - HL projected with BC":
+            return HL_projection_withBC(_polynomial_non_div(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         
         ### others
         case other:
