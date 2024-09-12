@@ -6,7 +6,7 @@ NAME_EXPERIMENT: str = "TH_initial_poly_noise_noDiv"
 ALGORITHM_NAME: str =  "CN mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
 
 ### Data
-INITIAL_CONDITION_NAME: str = "polynomial"    #see 'src.predefined_data' for available choices
+INITIAL_CONDITION_NAME: str = "polynomial - HL projected with BC"    #see 'src.predefined_data' for available choices
 FREQUENZY_X: int = 2
 FREQUENZY_Y: int = 4
 NOISE_COEFFICIENT_NAME: str = "polynomial - no div" #see 'src.predefined_data' for available choices
