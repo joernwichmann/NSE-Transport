@@ -40,6 +40,8 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return _trig_non_bc(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
         case "trigonometric - no div":
             return _trig_non_div(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space)
+        case "gravity":
+            return _gravity(velocity_space=space_disc.velocity_space)
         
         ### Stokes projected functions
         case "x: hill, y: wave - Stokes projected":
@@ -92,6 +94,12 @@ def get_function(name_requested_function: str, space_disc: SpaceDiscretisation,
             return HL_projection_withBC(_polynomial_non_bc(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         case "polynomial - no div - HL projected with BC":
             return HL_projection_withBC(_polynomial_non_div(mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - HL projected with BC":
+            return HL_projection_withBC(_trig(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric- no BC - HL projected with BC":
+            return HL_projection_withBC(_trig_non_bc(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
+        case "trigonometric - no div - HL projected with BC":
+            return HL_projection_withBC(_trig_non_div(j=index_x,k=index_y,mesh=space_disc.mesh,velocity_space=space_disc.velocity_space),space_disc)[0]
         
         ### others
         case other:
@@ -153,6 +161,11 @@ def _hill_wave(mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
         sin(2*pi*x)*sin(2*pi*y)
         ])
     return project(expr, velocity_space)
+
+def _gravity(velocity_space: FunctionSpace) -> Function:
+    expr = as_vector([0,-10])
+    return project(expr, velocity_space)
+
 
 #exactly divergence-free and vanishes on the boundary of the unit square
 def _polynomial(mesh: MeshGeometry, velocity_space: FunctionSpace) -> Function:
