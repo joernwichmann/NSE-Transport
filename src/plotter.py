@@ -16,6 +16,7 @@ def plot_ref_to_time_to_function(name_to_ref_to_time_to_number: dict[str,dict[in
         plt.title(name)
         plt.yscale(yscale_name[id])
     plt.savefig(filename)
+    plt.close()
 
 def plot_seed_to_time_to_number(seed_to_time_to_number: dict[int,dict[float,float]],
                                  filename: str,
@@ -28,6 +29,7 @@ def plot_seed_to_time_to_number(seed_to_time_to_number: dict[int,dict[float,floa
     plt.title(tilename)
     plt.yscale(yscale_name)
     plt.savefig(filename)
+    plt.close()
 
 
 def plot_seed_to_time_to_number_and_increments(seed_to_time_to_number: dict[int,dict[float,float]],
