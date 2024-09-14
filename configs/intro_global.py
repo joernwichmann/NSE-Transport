@@ -39,7 +39,7 @@ MESH_NAME: str = "unit square"  #see 'src.discretisation.mesh' for available cho
 NAME_BOUNDARY_CONDITION: str = "zero"  #see 'src.discretisation.mesh' for available choices
 
 # Monte Carlo
-MC_SAMPLES: int = 4
+MC_SAMPLES: int = 1000
 NOISE_INCREMENTS: str = "classical" # see 'src.noise' for available choices
 
 # Noise coefficient
@@ -61,7 +61,7 @@ ENERGY_CHECK: bool = True
 
 #Individual energy
 IND_ENERGY_CHECK: bool = True
-IND_ENERGY_NUMBER: int = 2
+IND_ENERGY_NUMBER: int = 1000
 
 #Statistics
 STATISTICS_CHECK: bool = False
