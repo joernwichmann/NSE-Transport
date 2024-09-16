@@ -121,7 +121,7 @@ def generate() -> None:
     if gcf.ENERGY_CHECK:
         energy_check_velocity = ProcessManager([
             Energy(time_disc,"kinetic_energy",kinetic_energy),
-            Energy(time_disc,"potential_energy",potential_energy)
+            #Energy(time_disc,"potential_energy",potential_energy)
         ])
 
     if gcf.IND_ENERGY_CHECK:
@@ -171,7 +171,8 @@ def generate() -> None:
             time_mark = process_time_ns()
             ind_energy_check_velocity = ProcessManager([
                 Energy(time_disc,f"ind_kinetic_energy_{k}",kinetic_energy),
-                Energy(time_disc,f"ind_potential_energy_{k}",potential_energy)])
+                #Energy(time_disc,f"ind_potential_energy_{k}",potential_energy)
+                ])
             ind_energy_check_velocity.update(ref_to_time_to_velocity,ref_to_noise_increments)
             sample_to_energy_check_velocity[k] = ind_energy_check_velocity
             runtimes["energy"] += process_time_ns()-time_mark

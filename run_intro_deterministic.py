@@ -121,7 +121,7 @@ def generate() -> None:
     if gcf.ENERGY_CHECK:
         energy_check_velocity = ProcessManager([
             Energy(time_disc,"kinetic_energy",kinetic_energy),
-            Energy(time_disc,"potential_energy",potential_energy)
+            #Energy(time_disc,"potential_energy",potential_energy)
         ])
 
     if gcf.STATISTICS_CHECK:
