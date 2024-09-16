@@ -207,7 +207,7 @@ def generate() -> None:
         logging.info(format_header("ENERGY CHECK") + f"\nEnergy checks are stored in:\t {cf.ENERGY_DIRECTORYNAME}/")
         energy_check_velocity.save(cf.ENERGY_DIRECTORYNAME)
         energy_check_velocity.plot(cf.ENERGY_DIRECTORYNAME)
-        energy_check_velocity.plot_individual(cf.ENERGY_DIRECTORYNAME)
+        #energy_check_velocity.plot_individual(cf.ENERGY_DIRECTORYNAME)
 
     if gcf.IND_ENERGY_CHECK:
         logging.info(format_header("ENERGY CHECK") + f"\nEnergy checks are stored in:\t {cf.ENERGY_DIRECTORYNAME}/")
