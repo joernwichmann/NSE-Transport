@@ -13,7 +13,7 @@ MODEL_NAME: str = "Navier--Stokes" #see src.algorithms.select.py for available c
 FORCING: str = "trigonometric"   #see 'src.predefined_data' for available choices
 FORCING_FREQUENZY_X: int = 2
 FORCING_FREQUENZY_Y: int = 4
-FORCING_INTENSITY: float = 1
+FORCING_INTENSITY: float = 100
 
 # Time
 INITIAL_TIME: float = 0
@@ -21,10 +21,10 @@ END_TIME: float = 1
 REFINEMENT_LEVELS: list[int] = list(range(9,10))
 
 # Initial data
-INITIAL_CONDITION_NAME: str = "polynomial - no BC - HL projected with BC"    #see 'src.predefined_data' for available choices
+INITIAL_CONDITION_NAME: str = "polynomial - HL projected with BC"    #see 'src.predefined_data' for available choices
 INITIAL_FREQUENZY_X: int = 2
 INITIAL_FREQUENZY_Y: int = 4
-INITIAL_INTENSITY: float = 100
+INITIAL_INTENSITY: float = 1000
 
 # Elements
 VELOCITY_ELEMENT: str = "CG"    #see firedrake doc for available spaces
@@ -39,7 +39,7 @@ MESH_NAME: str = "unit square"  #see 'src.discretisation.mesh' for available cho
 NAME_BOUNDARY_CONDITION: str = "zero"  #see 'src.discretisation.mesh' for available choices
 
 # Monte Carlo
-MC_SAMPLES: int = 1000
+MC_SAMPLES: int = 10000
 NOISE_INCREMENTS: str = "classical" # see 'src.noise' for available choices
 
 # Noise coefficient
