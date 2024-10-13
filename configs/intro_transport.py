@@ -3,7 +3,7 @@
 NAME_EXPERIMENT: str = "intro-transport"
 
 ### Algorithm
-ALGORITHM_NAME: str =  "CN mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
+ALGORITHM_NAME: str =  "IE mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
 
 ################               FILE/DIRECTORY NAMES               ############################
 #Log

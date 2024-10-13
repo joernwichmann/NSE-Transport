@@ -3,7 +3,7 @@
 NAME_EXPERIMENT: str = "TH_initial_poly_noise_poly"
 
 ### Algorithm
-ALGORITHM_NAME: str =  "CN mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
+ALGORITHM_NAME: str =  "IE mixed FEM Strato Transport with div-sym" #see src.algorithms.select.py for available choices
 
 ### Data
 INITIAL_CONDITION_NAME: str = "polynomial - HL projected with BC"    #see 'src.predefined_data' for available choices
